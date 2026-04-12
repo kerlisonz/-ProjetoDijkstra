@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projeto Dijkstra</title>
+  <link rel="icon" type="image/svg+xml" href="/static/favicon.svg" />
+  <link rel="icon" type="image/png" href="/static/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+
+<body>
+
+  <!-- ── SIDEBAR ───────────────────────────────────────────── -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-icon">⬡</div>
+      <span class="logo-text">Dijkstra</span>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-item-select">
+        <label>Origem</label>
+        <select id="select-origem"></select>
+      </div>
+      <div class="nav-item-select">
+        <label>Destino</label>
+        <select id="select-destino"></select>
+      </div>
+      <button class="btn-run" id="btn-run"><span>▶</span> Encontrar Caminho</button>
+      <button class="btn-swap" id="btn-swap">⇄ Trocar</button>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="nav-section-label">Feito por</div>
+      <p class="team-names">
+        Francisco Genyson · Kerlisson Kennedy · Luiz Gustavo · Marcos Macedo · Wilton Carlos
+      </p>
+    </div>
+  </aside>
+
+  <!-- ── MAIN ──────────────────────────────────────────────── -->
+  <main class="main">
+
+    <!-- Topbar -->
+    <header class="topbar">
+      <div class="topbar-title">
+        <span class="topbar-label">Mapa Rodoviário do RN</span>
+      </div>
+      <div class="topbar-meta">
+        <span class="meta-chip">27 cidades</span>
+        <span class="meta-chip">37 arestas</span>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+          <span id="theme-icon">🌙</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- ── SLIDES WRAPPER ──────────────────────────────────── -->
+    <div class="slides-wrapper">
+
+      <!-- ── SLIDE 1: Grafo ─────────────────────────────────── -->
+      <div class="slide active" id="slide-grafo">
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-dots"><span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span></div>
+            <span class="panel-title">Visualização do Grafo</span>
+            <span class="panel-hint" id="panel-hint"></span>
+          </div>
+          <div class="graph-area">
+            <svg id="graph-svg" viewBox="0 0 1400 900" preserveAspectRatio="xMidYMid meet"></svg>
+            <div class="loading-overlay" id="loading">
+              <div class="spinner"></div><span>Calculando…</span>
+            </div>
+            <div class="zoom-controls">
+              <button class="zoom-btn" id="btn-zoom-reset" title="Resetar zoom">⊙</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── SLIDE 2: Lista de Cidades ─────────────────────── -->
+      <div class="slide" id="slide-cidades">
+        <div class="panel slide-panel">
+          <div class="slide-content">
+            <div class="slide-bg-deco">
+              <div class="slide-circle sc1"></div>
+              <div class="slide-circle sc2"></div>
+            </div>
+            <div class="slide-header-block">
+              <div>                <h1 class="slide-title">Lista de Cidades</h1>
+              </div>
+              <div class="slide-deco">
+                <div class="deco-lines"><span></span><span></span><span></span></div>
+                <div class="deco-triangle">◀</div>
+              </div>
+            </div>
+            <div class="slide-objective">
+              <strong>Objetivo:</strong>
+              <ul>
+                <li>27 cidades mapeadas, 37 arestas (conexões) | Escala: BR-304, BR-406, RN-118, RN-119</li>
+                <li>Optei por usar 25 para tornar o grafo mais realista, com mais rotas alternativas para o Dijkstra explorar e descartar antes de encontrar o caminho mínimo.</li>
+                <li>Mostrar todas as 27 cidades de forma clara e organizada, identificando quais fazem parte da rota ótima e quais são secundárias.</li>
+              </ul>
+            </div>
+            <div class="slide-tables">
+              <table class="slide-table">
+                <thead><tr><th>Trecho (Origem → Destino)</th><th>KM Acumulado e Total</th></tr></thead>
+                <tbody>
+                  <tr><td>Mossoró (Partida)</td><td>0 km</td></tr>
+                  <tr><td>Mossoró → Assú</td><td>+ 67 km - (67)</td></tr>
+                  <tr><td>Assú → Itajá</td><td>+ 15 km (82 km)</td></tr>
+                  <tr><td>Itajá → Lajes</td><td>+ 40 km (122 km)</td></tr>
+                  <tr><td>Lajes → Caiçara do Rio do Vento</td><td>+ 22 km - (144 km)</td></tr>
+                  <tr><td>Caiçara → Riachuelo</td><td>+ 32 km - (176 km)</td></tr>
+                  <tr><td>Riachuelo → Santa Maria</td><td>+ 18 km - (194 km)</td></tr>
+                  <tr><td>Santa Maria → Macaíba</td><td>+ 42 km - (236 km)</td></tr>
+                  <tr><td>Macaíba → Parnamirim</td><td>+ 13 km - (249 km)</td></tr>
+                  <tr><td>Parnamirim → São José de Mipibu</td><td>+ 18 km - (267 km)</td></tr>
+                  <tr><td>São José → Goianinha</td><td>+ 28 km - (295 km)</td></tr>
+                  <tr><td>Goianinha → Praia de Pipa</td><td>+ 25 km - (320 km)</td></tr>
+                </tbody>
+              </table>
+              <table class="slide-table">
+                <thead><tr><th>Cidades Secundárias</th><th>Conexões Adicionais</th></tr></thead>
+                <tbody>
+                  <tr><td>Apodi</td><td></td></tr>
+                  <tr><td>Areia Branca</td><td></td></tr>
+                  <tr><td>Porto do Mangue</td><td></td></tr>
+                  <tr><td>Macau</td><td></td></tr>
+                  <tr><td>Rio do Fogo</td><td></td></tr>
+                  <tr><td>Guamaré</td><td></td></tr>
+                  <tr><td>Touros</td><td></td></tr>
+                  <tr><td>Canguaretama</td><td></td></tr>
+                  <tr><td>Angicos</td><td></td></tr>
+                  <tr><td>João Câmara</td><td class="hub-cell">Hub importante (4 conexões)</td></tr>
+                  <tr><td>Campo Grande</td><td></td></tr>
+                  <tr><td>Ceará-Mirim</td><td></td></tr>
+                  <tr><td>Nísia Floresta</td><td></td></tr>
+                  <tr><td>Caicó</td><td></td></tr>
+                  <tr><td>Natal</td><td class="hub-cell hub-main">Hub principal (6 conexões)</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="slide-dots-deco">
+              <span class="sdot"></span><span class="sdot"></span><span class="sdot"></span>
+              <span class="sdot"></span><span class="sdot"></span><span class="sdot"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── SLIDE 3: Matriz de Distâncias ─────────────────── -->
+      <div class="slide" id="slide-matriz">
+        <div class="panel slide-panel">
+          <div class="slide-content">
+            <div class="slide-bg-deco">
+              <div class="slide-circle sc1 sc-amber"></div>
+              <div class="slide-circle sc2"></div>
+            </div>
+            <div class="slide-header-block">
+              <div>
+                <div class="slide-badge">Grafo Ponderado · 27 nós</div>
+                <h1 class="slide-title">Matriz de Distâncias</h1>
+              </div>
+            </div>
+            <p class="slide-subtitle">Representação simétrica das distâncias rodoviárias (km) entre todos os nós do grafo</p>
+            <div class="matrix-scroll">
+              <table class="matrix-table">
+                <thead>
+                  <tr>
+                    <th>Cidades</th><th>Mossoró</th><th>Assú</th><th>Itajá</th><th>Lajes</th>
+                    <th>Caiçara</th><th>Riachuelo</th><th>Santa M.</th><th>Macaíba</th><th>Parnamirim</th><th>São José</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td class="matrix-row-label">Mossoró</td><td>0</td><td>67<sup class="s3">3</sup></td><td>82<sup class="s3">3</sup></td><td>122<sup class="s4">4</sup></td><td>144<sup class="s4">4</sup></td><td>176<sup class="s4">4</sup></td><td>194<sup class="s4">4</sup></td><td>236<sup class="s4">4</sup></td><td>249<sup class="s4">4</sup></td><td>267<sup class="s4">4</sup></td></tr>
+                  <tr><td class="matrix-row-label">Assú</td><td>67<sup class="s3">3</sup></td><td>0</td><td>15<sup class="s1">1</sup></td><td>40<sup class="s2">2</sup></td><td>55<sup class="s2">2</sup></td><td>65<sup class="s3">3</sup></td><td>75<sup class="s3">3</sup></td><td>90<sup class="s3">3</sup></td><td>105<sup class="s4">4</sup></td><td>123<sup class="s4">4</sup></td></tr>
+                  <tr><td class="matrix-row-label">Itajá</td><td>82<sup class="s3">3</sup></td><td>15<sup class="s1">1</sup></td><td>0</td><td>40<sup class="s2">2</sup></td><td>55<sup class="s2">2</sup></td><td>75<sup class="s3">3</sup></td><td>90<sup class="s3">3</sup></td><td>100<sup class="s3">3</sup></td><td>115<sup class="s4">4</sup></td><td>133<sup class="s4">4</sup></td></tr>
+                  <tr><td class="matrix-row-label">Lajes</td><td>122<sup class="s4">4</sup></td><td>40<sup class="s2">2</sup></td><td>40<sup class="s2">2</sup></td><td>0</td><td>22<sup class="s1">1</sup></td><td>40<sup class="s2">2</sup></td><td>65<sup class="s3">3</sup></td><td>85<sup class="s3">3</sup></td><td>100<sup class="s3">3</sup></td><td>118<sup class="s4">4</sup></td></tr>
+                  <tr><td class="matrix-row-label">Caiçara</td><td>144<sup class="s4">4</sup></td><td>55<sup class="s2">2</sup></td><td>55<sup class="s2">2</sup></td><td>22<sup class="s1">1</sup></td><td>0</td><td>32<sup class="s2">2</sup></td><td>32<sup class="s2">2</sup></td><td>70<sup class="s3">3</sup></td><td>85<sup class="s3">3</sup></td><td>103<sup class="s4">4</sup></td></tr>
+                  <tr><td class="matrix-row-label">Riachuelo</td><td>176<sup class="s4">4</sup></td><td>65<sup class="s3">3</sup></td><td>75<sup class="s3">3</sup></td><td>40<sup class="s2">2</sup></td><td>32<sup class="s2">2</sup></td><td>0</td><td>18<sup class="s1">1</sup></td><td>60<sup class="s2">2</sup></td><td>75<sup class="s3">3</sup></td><td>93<sup class="s3">3</sup></td></tr>
+                  <tr><td class="matrix-row-label">Santa M.</td><td>194<sup class="s4">4</sup></td><td>75<sup class="s3">3</sup></td><td>90<sup class="s3">3</sup></td><td>65<sup class="s3">3</sup></td><td>32<sup class="s2">2</sup></td><td>18<sup class="s1">1</sup></td><td>0</td><td>42<sup class="s2">2</sup></td><td>57<sup class="s2">2</sup></td><td>75<sup class="s3">3</sup></td></tr>
+                  <tr><td class="matrix-row-label">Macaíba</td><td>236<sup class="s4">4</sup></td><td>90<sup class="s3">3</sup></td><td>100<sup class="s3">3</sup></td><td>85<sup class="s3">3</sup></td><td>70<sup class="s3">3</sup></td><td>60<sup class="s2">2</sup></td><td>42<sup class="s2">2</sup></td><td>0</td><td>13<sup class="s1">1</sup></td><td>31<sup class="s2">2</sup></td></tr>
+                  <tr><td class="matrix-row-label">Parnamirim</td><td>249<sup class="s4">4</sup></td><td>105<sup class="s4">4</sup></td><td>115<sup class="s4">4</sup></td><td>100<sup class="s3">3</sup></td><td>85<sup class="s3">3</sup></td><td>75<sup class="s3">3</sup></td><td>57<sup class="s2">2</sup></td><td>13<sup class="s1">1</sup></td><td>0</td><td>18<sup class="s1">1</sup></td></tr>
+                  <tr><td class="matrix-row-label">São José</td><td>267<sup class="s4">4</sup></td><td>123<sup class="s4">4</sup></td><td>133<sup class="s4">4</sup></td><td>118<sup class="s4">4</sup></td><td>103<sup class="s4">4</sup></td><td>93<sup class="s3">3</sup></td><td>75<sup class="s3">3</sup></td><td>31<sup class="s2">2</sup></td><td>18<sup class="s1">1</sup></td><td>0</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="matrix-legend">
+              <p>Cada número sobrescrito indica o "peso" daquela conexão:</p>
+              <div class="legend-grid">
+                <div class="legend-item-card"><span class="legend-level l1">N1</span><span>Até 25 km — Muito Curta (Cidades vizinhas)</span></div>
+                <div class="legend-item-card"><span class="legend-level l2">N2</span><span>25–60 km — Média/Curta (Trajeto regional rápido)</span></div>
+                <div class="legend-item-card"><span class="legend-level l3">N3</span><span>60–100 km — Longa/Média (Exige planejamento)</span></div>
+                <div class="legend-item-card"><span class="legend-level l4">N4</span><span>Acima de 100 km — Muito Longa (Atravessa grandes regiões)</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── SLIDE 4: Graphviz Online ──────────────────────── -->
+      <div class="slide" id="slide-graphviz">
+        <div class="panel slide-panel">
+          <div class="graphviz-slide">
+            <div class="gv-bg-deco">
+              <div class="gv-circle gv-c1"></div>
+              <div class="gv-circle gv-c2"></div>
+              <div class="gv-circle gv-c3"></div>
+            </div>
+            <div class="graphviz-info">
+              <div class="gv-badge">Ferramenta Externa</div>
+              <div class="gv-logo-row">
+                <span class="gv-hex">⬡</span>
+                <span class="gv-hex gv-hex2">⬡</span>
+                <span class="gv-hex gv-hex3">⬡</span>
+              </div>
+              <h2 class="graphviz-title">Graphviz Online</h2>
+              <p class="graphviz-subtitle">Renderização fiel ao arquivo <code>.dot</code></p>
+              <div class="gv-features">
+                <div class="gv-feature"><span class="gv-feat-dot gv-fd-amber"></span><span>Posições fixas dos nós</span></div>
+                <div class="gv-feature"><span class="gv-feat-dot gv-fd-blue"></span><span>Caminho mínimo destacado</span></div>
+              </div>
+              <a id="btn-graphviz-open" class="btn-graphviz" target="_blank" rel="noopener">
+                <span class="btn-gv-icon">↗</span>
+                Abrir no GraphvizOnline
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── SLIDE 5: Escolha do Destino ───────────────────── -->
+      <div class="slide" id="slide-destino">
+        <div class="panel slide-panel">
+          <div class="slide-content">
+            <div class="slide-bg-deco">
+              <div class="slide-circle sc1"></div>
+              <div class="slide-circle sc2 sc-amber"></div>
+            </div>
+            <div class="slide-header-block">
+              <div>
+                <div class="slide-badge">Origem · Destino</div>
+                <h1 class="slide-title">Escolha do Destino</h1>
+              </div>
+            </div>
+
+            <div class="destino-grid">
+              <div class="destino-card">
+                <div class="destino-label destino-label-origem">Origem: Mossoró</div>
+                <div class="destino-img-wrap">
+                  <img src="/static/mossoro.jpg" alt="Mossoró" class="destino-img" />
+                </div>
+                <div class="destino-info">
+                  <span class="destino-badge destino-badge-blue">Ponto de partida</span>
+                  <p>Maior cidade do interior do RN, polo econômico e cultural da região Oeste.</p>
+                </div>
+              </div>
+
+              <div class="destino-card">
+                <div class="destino-label destino-label-destino">Destino: Praia de Pipa</div>
+                <div class="destino-img-wrap">
+                  <img src="/static/pipa.jpg" alt="Praia de Pipa" class="destino-img" />
+                </div>
+                <div class="destino-info">
+                  <span class="destino-badge destino-badge-red">Destino turístico</span>
+                  <p>Uma das praias mais famosas do Brasil, localizada no litoral sul do RN.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="destino-footer">
+              <div class="destino-stat">
+                <span class="destino-stat-val">320 km</span>
+                <span class="destino-stat-lbl">Caminho mínimo (Dijkstra)</span>
+              </div>
+              <div class="destino-stat">
+                <span class="destino-stat-val">332 km</span>
+                <span class="destino-stat-lbl">Google Maps (BR-304)</span>
+              </div>
+              <div class="destino-stat">
+                <span class="destino-stat-val">11 cidades</span>
+                <span class="destino-stat-lbl">No caminho mínimo</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div><!-- fim slides-wrapper -->
+
+    <!-- ── NAVEGAÇÃO DOS SLIDES ─────────────────────────────── -->
+    <nav class="slide-nav">
+      <button class="slide-nav-btn active" data-slide="slide-grafo">
+        <span class="slide-nav-dot"></span>
+        <span>Visualização do Grafo</span>
+      </button>
+      <button class="slide-nav-btn" data-slide="slide-cidades">
+        <span class="slide-nav-dot"></span>
+        <span>Lista de Cidades</span>
+      </button>
+      <button class="slide-nav-btn" data-slide="slide-matriz">
+        <span class="slide-nav-dot"></span>
+        <span>Matriz de Distâncias</span>
+      </button>
+      <button class="slide-nav-btn" data-slide="slide-graphviz">
+        <span class="slide-nav-dot"></span>
+        <span>Graphviz Online</span>
+      </button>
+      <button class="slide-nav-btn" data-slide="slide-destino">
+        <span class="slide-nav-dot"></span>
+        <span>Escolha do Destino</span>
+      </button>
+    </nav>
+
+  </main>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

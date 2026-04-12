@@ -1,0 +1,148 @@
+// ============================================================
+//  Mapa Rodoviário - Rio Grande do Norte
+//  Algoritmo de Dijkstra: Mossoró → Praia de Pipa
+//
+//  Caminho mínimo (320 km):
+//    Mossoró → Assú → Itajá → Lajes → Caiçara → Riachuelo
+//    → Santa Maria → Macaíba → Parnamirim → São José
+//    → Goianinha → Praia de Pipa
+// ============================================================
+
+digraph RN {
+
+    layout      = neato;
+    overlap     = false;
+    splines     = true;
+    sep         = "+18";
+    outputorder = edgesfirst;
+
+    graph [
+        label     = "Mapa Rodoviário RN — Mossoró → Praia de Pipa\nDijkstra: 320 km  |  Google Maps BR-304: 332 km  |  27 cidades  |  37 arestas",
+        fontname  = "Helvetica",
+        fontsize  = 12,
+        fontcolor = "#333333",
+        bgcolor   = "#F8F7F4",
+        labelloc  = "t"
+    ];
+
+    node [
+        shape     = circle,
+        style     = "filled,setlinewidth(1.2)",
+        width     = 0.85,
+        height    = 0.85,
+        fixedsize = true,
+        fontname  = "Helvetica",
+        fontsize  = 8,
+        fontcolor = "#333333",
+        fillcolor = "#D3D1C7",
+        color     = "#888780"
+    ];
+
+    edge [
+        fontname  = "Helvetica",
+        fontsize  = 7,
+        fontcolor = "#777777",
+        color     = "#BBBBBB",
+        penwidth  = 1.2,
+        dir       = both,
+        arrowsize = 0.45
+    ];
+
+    // =========================================================
+    //  NOS — pos="x,y!" fixa posições baseadas no layout do site
+    //  Escala: x = coord*16, y = (1-coord)*9
+    // =========================================================
+
+    Mossoro [
+        label = "Mossoró\n(0 km)",
+        fillcolor = "#378ADD", fontcolor = "#FFFFFF", color = "#185FA5",
+        width = 1.15, height = 1.15, fontsize = 9, penwidth = 2.8,
+        pos = "3.20,6.84!"
+    ];
+
+    Pipa [
+        label = "Praia de Pipa\n(320 km)",
+        fillcolor = "#D85A30", fontcolor = "#FFFFFF", color = "#993C1D",
+        width = 1.15, height = 1.15, fontsize = 8, penwidth = 2.8,
+        pos = "14.40,4.68!"
+    ];
+
+    Natal [
+        label = "Natal",
+        fillcolor = "#B5D4F4", fontcolor = "#0C447C", color = "#185FA5",
+        width = 1.0, height = 1.0, fontsize = 9, penwidth = 2.0,
+        pos = "8.64,5.22!"
+    ];
+
+    Assu       [label = "Assú\n(67 km)",        fillcolor = "#EF9F27", color = "#BA7517", fontcolor = "#412402", penwidth = 2.0, pos = "1.12,5.76!"];
+    Itaja      [label = "Itajá\n(82 km)",        fillcolor = "#EF9F27", color = "#BA7517", fontcolor = "#412402", penwidth = 2.0, pos = "4.80,6.30!"];
+    Lajes      [label = "Lajes\n(122 km)",       fillcolor = "#EF9F27", color = "#BA7517", fontcolor = "#412402", penwidth = 2.0, pos = "4.96,4.50!"];
+    Caicara    [label = "Caiçara\n(144 km)",     fillcolor = "#EF9F27", color = "#BA7517", fontcolor = "#412402", penwidth = 2.0, pos = "3.52,3.60!"];
+    Riachuelo  [label = "Riachuelo\n(176 km)",   fillcolor = "#EF9F27", color = "#BA7517", fontcolor = "#412402", penwidth = 2.0, pos = "3.52,2.16!"];
+    SantaMaria [label = "Sta. Maria\n(194 km)",  fillcolor = "#EF9F27", color = "#BA7517", fontcolor = "#412402", penwidth = 2.0, pos = "6.08,2.16!"];
+    Macaiba    [label = "Macaíba\n(236 km)",     fillcolor = "#EF9F27", color = "#BA7517", fontcolor = "#412402", penwidth = 2.0, pos = "8.64,3.78!"];
+    Parnamirim [label = "Parnamirim\n(249 km)",  fillcolor = "#EF9F27", color = "#BA7517", fontcolor = "#412402", penwidth = 2.0, pos = "10.08,4.68!"];
+    SaoJose    [label = "São José\n(267 km)",    fillcolor = "#EF9F27", color = "#BA7517", fontcolor = "#412402", penwidth = 2.0, pos = "11.84,4.68!"];
+    Goianinha  [label = "Goianinha\n(295 km)",   fillcolor = "#EF9F27", color = "#BA7517", fontcolor = "#412402", penwidth = 2.0, pos = "12.64,2.52!"];
+
+    Apodi        [label = "Apodi",            pos = "0.80,8.10!"];
+    AreiaBranca  [label = "Areia\nBranca",    pos = "3.20,8.37!"];
+    PortoMangue  [label = "Porto do\nMangue", pos = "5.76,8.37!"];
+    Macau        [label = "Macau",            pos = "8.64,8.37!"];
+    RioFogo      [label = "Rio do\nFogo",     pos = "13.12,8.37!"];
+    Guamare      [label = "Guamaré",          pos = "7.36,6.48!"];
+    Touros       [label = "Touros",           pos = "10.24,7.02!"];
+    Canguaretama [label = "Canguare-\ntama",  pos = "13.44,6.66!"];
+    Angicos      [label = "Angicos",          pos = "3.04,4.86!"];
+    JoaoCamara   [label = "João\nCâmara",     pos = "6.72,5.22!"];
+    CampoGrande  [label = "Campo\nGrande",    pos = "0.96,3.78!"];
+    CearaMirim   [label = "Ceará\nMirim",     pos = "6.72,3.78!"];
+    Nisia        [label = "Nísia\nFloresta",  pos = "10.08,2.70!"];
+    Caico        [label = "Caicó",            pos = "0.96,1.98!"];
+
+    // =========================================================
+    //  ARESTAS — caminho mínimo
+    // =========================================================
+
+    Mossoro    -> Assu       [label = "67 km",  color = "#D85A30", penwidth = 4.5, fontcolor = "#7A2810", fontsize = 8];
+    Assu       -> Itaja      [label = "15 km",  color = "#D85A30", penwidth = 4.5, fontcolor = "#7A2810", fontsize = 8];
+    Itaja      -> Lajes      [label = "40 km",  color = "#D85A30", penwidth = 4.5, fontcolor = "#7A2810", fontsize = 8];
+    Lajes      -> Caicara    [label = "22 km",  color = "#D85A30", penwidth = 4.5, fontcolor = "#7A2810", fontsize = 8];
+    Caicara    -> Riachuelo  [label = "32 km",  color = "#D85A30", penwidth = 4.5, fontcolor = "#7A2810", fontsize = 8];
+    Riachuelo  -> SantaMaria [label = "18 km",  color = "#D85A30", penwidth = 4.5, fontcolor = "#7A2810", fontsize = 8];
+    SantaMaria -> Macaiba    [label = "42 km",  color = "#D85A30", penwidth = 4.5, fontcolor = "#7A2810", fontsize = 8];
+    Macaiba    -> Parnamirim [label = "13 km",  color = "#D85A30", penwidth = 4.5, fontcolor = "#7A2810", fontsize = 8];
+    Parnamirim -> SaoJose    [label = "18 km",  color = "#D85A30", penwidth = 4.5, fontcolor = "#7A2810", fontsize = 8];
+    SaoJose    -> Goianinha  [label = "28 km",  color = "#D85A30", penwidth = 4.5, fontcolor = "#7A2810", fontsize = 8];
+    Goianinha  -> Pipa       [label = "25 km",  color = "#D85A30", penwidth = 4.5, fontcolor = "#7A2810", fontsize = 8];
+
+    // =========================================================
+    //  ARESTAS — rotas secundárias
+    // =========================================================
+
+    Mossoro      -> AreiaBranca  [label = "47 km"];
+    Mossoro      -> Apodi        [label = "110 km"];
+    AreiaBranca  -> PortoMangue  [label = "52 km"];
+    PortoMangue  -> Macau        [label = "58 km"];
+    Macau        -> Guamare      [label = "42 km"];
+    Guamare      -> JoaoCamara   [label = "80 km"];
+    Assu         -> Angicos      [label = "55 km"];
+    Angicos      -> Lajes        [label = "30 km"];
+    Angicos      -> CampoGrande  [label = "78 km"];
+    CampoGrande  -> Caico        [label = "90 km"];
+    Lajes        -> JoaoCamara   [label = "65 km"];
+    JoaoCamara   -> Natal        [label = "80 km"];
+    JoaoCamara   -> Touros       [label = "75 km"];
+    JoaoCamara   -> CearaMirim   [label = "42 km"];
+    Touros       -> RioFogo      [label = "22 km"];
+    RioFogo      -> Natal        [label = "62 km"];
+    CearaMirim   -> Natal        [label = "44 km"];
+    CearaMirim   -> Macaiba      [label = "35 km"];
+    Macaiba      -> Natal        [label = "18 km"];
+    Natal        -> Parnamirim   [label = "15 km"];
+    SaoJose      -> Nisia        [label = "10 km"];
+    Nisia        -> Goianinha    [label = "25 km"];
+    Goianinha    -> Canguaretama [label = "18 km"];
+    Canguaretama -> Pipa         [label = "22 km"];
+    SaoJose      -> Canguaretama [label = "32 km"];
+}
