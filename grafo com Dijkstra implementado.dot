@@ -48,10 +48,8 @@ digraph RN {
         arrowsize = 0.45
     ];
 
-    // =========================================================
     //  NOS — pos="x,y!" fixa posições baseadas no layout do site
     //  Escala: x = coord*16, y = (1-coord)*9
-    // =========================================================
 
     Mossoro [
         label = "Mossoró\n(0 km)",
@@ -100,9 +98,7 @@ digraph RN {
     Nisia        [label = "Nísia\nFloresta",  pos = "10.08,2.70!"];
     Caico        [label = "Caicó",            pos = "0.96,1.98!"];
 
-    // =========================================================
-    //  ARESTAS — caminho mínimo
-    // =========================================================
+    //  ARESTAS - caminho mínimo
 
     Mossoro    -> Assu       [label = "67 km",  color = "#D85A30", penwidth = 4.5, fontcolor = "#7A2810", fontsize = 8];
     Assu       -> Itaja      [label = "15 km",  color = "#D85A30", penwidth = 4.5, fontcolor = "#7A2810", fontsize = 8];
@@ -115,11 +111,9 @@ digraph RN {
     Parnamirim -> SaoJose    [label = "18 km",  color = "#D85A30", penwidth = 4.5, fontcolor = "#7A2810", fontsize = 8];
     SaoJose    -> Goianinha  [label = "28 km",  color = "#D85A30", penwidth = 4.5, fontcolor = "#7A2810", fontsize = 8];
     Goianinha  -> Pipa       [label = "25 km",  color = "#D85A30", penwidth = 4.5, fontcolor = "#7A2810", fontsize = 8];
-
-    // =========================================================
-    //  ARESTAS — rotas secundárias
-    // =========================================================
-
+  
+    //  ARESTAS - rotas secundárias
+   
     Mossoro      -> AreiaBranca  [label = "47 km"];
     Mossoro      -> Apodi        [label = "110 km"];
     AreiaBranca  -> PortoMangue  [label = "52 km"];
