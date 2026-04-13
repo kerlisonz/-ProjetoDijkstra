@@ -259,7 +259,7 @@ select:focus {
 
 /* ── Topbar ───────────────────────────────────────────────── */
 .topbar {
-  display: flex; align-items: center; justify-content: space-between;
+  display: flex; align-items: center; justify-content: flex-end;
   padding: 0 24px; height: 56px;
   background: var(--sidebar);
   backdrop-filter: blur(40px) saturate(180%);
@@ -269,12 +269,6 @@ select:focus {
   box-shadow: 0 1px 8px rgba(0, 0, 0, 0.05);
 }
 .topbar-title { display: flex; align-items: center; }
-.topbar-label { 
-  font-size: 1rem; 
-  font-weight: 600; 
-  color: var(--text); 
-  letter-spacing: -0.02em;
-}
 .topbar-meta { display: flex; gap: 10px; align-items: center; }
 .meta-chip {
   font-size: 0.75rem; font-weight: 500; padding: 6px 12px; border-radius: 20px;
