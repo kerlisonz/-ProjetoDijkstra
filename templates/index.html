@@ -290,29 +290,416 @@
         </div>
       </div>
 
+      <!-- ── SLIDE: Caminho Mínimo ─────────────────────────── -->
+      <div class="slide" id="slide-caminho-minimo">
+        <div class="panel slide-panel">
+          <div class="slide-content">
+            <div class="slide-bg-deco">
+              <div class="slide-circle sc1"></div>
+              <div class="slide-circle sc2 sc-amber"></div>
+            </div>
+            <div class="slide-header-block">
+              <div>
+                <div class="slide-badge">Teoria dos Grafos</div>
+                <h1 class="slide-title">Caminho Mínimo</h1>
+              </div>
+              <div class="slide-deco">
+                <div class="deco-lines"><span></span><span></span><span></span></div>
+                <div class="deco-triangle">◀</div>
+              </div>
+            </div>
+
+            <div class="slide-objective">
+              <strong>Conceito:</strong> Encontrar a rota de menor custo total entre dois vértices em um grafo ponderado.
+            </div>
+
+            <div class="info-two-col">
+              <div class="info-col">
+                <div class="info-card">
+                  <strong>Definição</strong>
+                  <p>Consiste em encontrar a rota de menor custo total entre dois vértices, considerando os pesos das arestas.</p>
+                </div>
+                <div class="info-card">
+                  <strong>Algoritmos Clássicos</strong>
+                  <p>Dijkstra e Bellman-Ford são os mais utilizados para resolver problemas de caminho mínimo em grafos.</p>
+                </div>
+                <div class="info-card">
+                  <strong>Aplicações</strong>
+                  <p>Roteamento de redes, GPS, logística de transporte e otimização de rotas.</p>
+                </div>
+              </div>
+              <div class="info-col info-col-center">
+                <div class="brasil-map-placeholder">
+                  <svg viewBox="0 0 300 280" class="brasil-svg">
+                    <defs>
+                      <radialGradient id="node-grad-cm" cx="50%" cy="50%" r="50%">
+                        <stop offset="0%" stop-color="#60a5fa"/>
+                        <stop offset="100%" stop-color="#007aff"/>
+                      </radialGradient>
+                    </defs>
+                    <!-- Arestas -->
+                    <line x1="80" y1="60" x2="150" y2="100" stroke="#007aff" stroke-width="1.5" opacity="0.4"/>
+                    <line x1="150" y1="100" x2="220" y2="80" stroke="#007aff" stroke-width="1.5" opacity="0.4"/>
+                    <line x1="150" y1="100" x2="180" y2="160" stroke="#EF9F27" stroke-width="2.5"/>
+                    <line x1="180" y1="160" x2="140" y2="200" stroke="#EF9F27" stroke-width="2.5"/>
+                    <line x1="140" y1="200" x2="200" y2="220" stroke="#EF9F27" stroke-width="2.5"/>
+                    <line x1="80" y1="60" x2="60" y2="130" stroke="#007aff" stroke-width="1.5" opacity="0.4"/>
+                    <line x1="60" y1="130" x2="100" y2="180" stroke="#007aff" stroke-width="1.5" opacity="0.4"/>
+                    <line x1="220" y1="80" x2="240" y2="150" stroke="#007aff" stroke-width="1.5" opacity="0.4"/>
+                    <line x1="240" y1="150" x2="200" y2="220" stroke="#007aff" stroke-width="1.5" opacity="0.4"/>
+                    <!-- Nós -->
+                    <circle cx="80" cy="60" r="8" fill="#007aff" opacity="0.6"/>
+                    <circle cx="220" cy="80" r="8" fill="#007aff" opacity="0.6"/>
+                    <circle cx="60" cy="130" r="7" fill="#6b7280" opacity="0.5"/>
+                    <circle cx="240" cy="150" r="7" fill="#6b7280" opacity="0.5"/>
+                    <circle cx="100" cy="180" r="7" fill="#6b7280" opacity="0.5"/>
+                    <circle cx="150" cy="100" r="12" fill="url(#node-grad-cm)" filter="drop-shadow(0 2px 6px rgba(0,122,255,0.5))"/>
+                    <circle cx="180" cy="160" r="10" fill="#EF9F27" filter="drop-shadow(0 2px 6px rgba(239,159,39,0.5))"/>
+                    <circle cx="140" cy="200" r="10" fill="#EF9F27" filter="drop-shadow(0 2px 6px rgba(239,159,39,0.5))"/>
+                    <circle cx="200" cy="220" r="12" fill="#D85A30" filter="drop-shadow(0 2px 6px rgba(216,90,48,0.5))"/>
+                    <!-- Labels -->
+                    <text x="150" y="88" text-anchor="middle" font-size="9" fill="#007aff" font-weight="700">Origem</text>
+                    <text x="200" y="238" text-anchor="middle" font-size="9" fill="#D85A30" font-weight="700">Destino</text>
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            <div class="slide-dots-deco">
+              <span class="sdot"></span><span class="sdot"></span><span class="sdot"></span>
+              <span class="sdot"></span><span class="sdot"></span><span class="sdot"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── SLIDE: Algoritmo de Dijkstra ──────────────────── -->
+      <div class="slide" id="slide-dijkstra">
+        <div class="panel slide-panel">
+          <div class="slide-content">
+            <div class="slide-bg-deco">
+              <div class="slide-circle sc1"></div>
+              <div class="slide-circle sc2"></div>
+            </div>
+            
+            <div class="slide-header-block">
+              <div>
+                <div class="slide-badge">Algoritmo Guloso</div>
+                <h1 class="slide-title">Algoritmo de Dijkstra</h1>
+              </div>
+              <div class="slide-deco">
+                <div class="deco-lines"><span></span><span></span><span></span></div>
+                <div class="deco-triangle">◀</div>
+              </div>
+            </div>
+
+            <div class="slide-objective">
+              <strong>Objetivo:</strong> Encontrar o caminho mais curto entre um vértice de origem e todos os outros vértices em um grafo ponderado com arestas de pesos não negativos.
+            </div>
+
+            <div class="algo-grid">
+              <div class="algo-card">
+                <div class="algo-card-header">
+                  <strong>Método Guloso</strong>
+                  <span class="algo-tag algo-tag-blue">Otimização</span>
+                </div>
+                <p>Seleciona sempre o vértice com menor distância acumulada, garantindo a solução ótima.</p>
+              </div>
+
+              <div class="algo-card">
+                <div class="algo-card-header">
+                  <strong>Pesos Não Negativos</strong>
+                  <span class="algo-tag algo-tag-blue">Restrição</span>
+                </div>
+                <p>Funciona apenas em grafos contendo arestas com pesos não negativos.</p>
+              </div>
+
+              <div class="algo-card algo-card-highlight">
+                <div class="algo-card-header">
+                  <strong>Complexidade</strong>
+                  <span class="algo-tag algo-tag-amber">O((V + E) log V)</span>
+                </div>
+                <p>Com heap binário, onde V é o número de vértices e E o número de arestas.</p>
+              </div>
+
+              <div class="algo-card">
+                <div class="algo-card-header">
+                  <strong>Aplicações</strong>
+                  <span class="algo-tag algo-tag-blue">Prática</span>
+                </div>
+                <p>GPS, roteamento de redes, logística e sistemas de navegação.</p>
+              </div>
+            </div>
+
+            <div class="slide-dots-deco">
+              <span class="sdot"></span><span class="sdot"></span><span class="sdot"></span>
+              <span class="sdot"></span><span class="sdot"></span><span class="sdot"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── SLIDE: Algoritmos Chave em Grafos ─────────────── -->
+      <div class="slide" id="slide-algoritmos">
+        <div class="panel slide-panel">
+          <div class="slide-content">
+            <div class="slide-bg-deco">
+              <div class="slide-circle sc1 sc-amber"></div>
+              <div class="slide-circle sc2"></div>
+            </div>
+            
+            <div class="slide-header-block">
+              <div>
+                <div class="slide-badge">Teoria dos Grafos</div>
+                <h1 class="slide-title">Algoritmos Chave em Grafos</h1>
+              </div>
+              <div class="slide-deco">
+                <div class="deco-lines"><span></span><span></span><span></span></div>
+                <div class="deco-triangle">◀</div>
+              </div>
+            </div>
+
+            <div class="slide-objective">
+              <strong>Visão Geral:</strong> Principais algoritmos utilizados para resolver problemas em grafos, desde busca até otimização de caminhos.
+            </div>
+
+            <div class="algoritmos-list">
+              <div class="algoritmo-item">
+                <div class="algoritmo-header">
+                  <div class="algoritmo-icon">⬡</div>
+                  <div class="algoritmo-title">
+                    <strong>Busca em Largura (BFS)</strong> — Explora todos os vizinhos de um vértice antes de avançar para os próximos níveis. Ideal para encontrar o caminho mais curto em grafos não ponderados.
+                  </div>
+                </div>
+              </div>
+
+              <div class="algoritmo-item">
+                <div class="algoritmo-header">
+                  <div class="algoritmo-icon">⬡</div>
+                  <div class="algoritmo-title">
+                    <strong>Busca em Profundidade (DFS)</strong> — Explora o mais longe possível em cada ramo antes de retroceder. Útil para detecção de ciclos e ordenação topológica.
+                  </div>
+                </div>
+              </div>
+
+              <div class="algoritmo-item">
+                <div class="algoritmo-header">
+                  <div class="algoritmo-icon">⬡</div>
+                  <div class="algoritmo-title">
+                    <strong>Caminho Mínimo (Dijkstra/Bellman-Ford)</strong> — Encontram o menor custo entre vértices em grafos ponderados. Dijkstra é mais eficiente para pesos não negativos.
+                  </div>
+                </div>
+              </div>
+
+              <div class="algoritmo-item">
+                <div class="algoritmo-header">
+                  <div class="algoritmo-icon">⬡</div>
+                  <div class="algoritmo-title">
+                    <strong>Árvore Geradora Mínima (Kruskal/Prim)</strong> — Constrói a árvore geradora mínima conectando todos os vértices com menor peso total.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="slide-dots-deco">
+              <span class="sdot"></span><span class="sdot"></span><span class="sdot"></span>
+              <span class="sdot"></span><span class="sdot"></span><span class="sdot"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── SLIDE: Aplicações Práticas dos Grafos ─────────── -->
+      <div class="slide" id="slide-aplicacoes">
+        <div class="panel slide-panel">
+          <div class="slide-content">
+            <div class="slide-bg-deco">
+              <div class="slide-circle sc1"></div>
+              <div class="slide-circle sc2 sc-amber"></div>
+            </div>
+            
+            <div class="slide-header-block">
+              <div>
+                <div class="slide-badge">Aplicações Reais</div>
+                <h1 class="slide-title">Aplicações Práticas dos Grafos</h1>
+              </div>
+              <div class="slide-deco">
+                <div class="deco-lines"><span></span><span></span><span></span></div>
+                <div class="deco-triangle">◀</div>
+              </div>
+            </div>
+
+            <div class="slide-objective">
+              <strong>Contexto:</strong> Os grafos são estruturas fundamentais em diversas áreas da computação e ciência, permitindo modelar e resolver problemas complexos do mundo real.
+            </div>
+
+            <div class="algo-grid">
+              <div class="algo-card">
+                <div class="algo-card-header">
+                  <strong>Redes Sociais</strong>
+                  <span class="algo-tag algo-tag-blue">Conectividade</span>
+                </div>
+                <p>Modelam conexões entre usuários, sugestões de amizades e análise de comunidades.</p>
+              </div>
+
+              <div class="algo-card">
+                <div class="algo-card-header">
+                  <strong>Roteamento em Redes</strong>
+                  <span class="algo-tag algo-tag-blue">Internet</span>
+                </div>
+                <p>Otimizam caminhos de dados em redes de computadores e protocolos de roteamento.</p>
+              </div>
+
+              <div class="algo-card">
+                <div class="algo-card-header">
+                  <strong>Logística e Transporte</strong>
+                  <span class="algo-tag algo-tag-amber">Otimização</span>
+                </div>
+                <p>Planejam rotas de entrega eficientes, reduzindo custos e tempo de transporte.</p>
+              </div>
+
+              <div class="algo-card">
+                <div class="algo-card-header">
+                  <strong>Biologia Computacional</strong>
+                  <span class="algo-tag algo-tag-blue">Ciência</span>
+                </div>
+                <p>Analisam redes de proteínas, genes e interações moleculares complexas.</p>
+              </div>
+
+              <div class="algo-card">
+                <div class="algo-card-header">
+                  <strong>Sistemas de Navegação</strong>
+                  <span class="algo-tag algo-tag-blue">GPS</span>
+                </div>
+                <p>Calculam rotas ótimas em mapas digitais, considerando tráfego e distâncias.</p>
+              </div>
+
+              <div class="algo-card">
+                <div class="algo-card-header">
+                  <strong>Compiladores</strong>
+                  <span class="algo-tag algo-tag-blue">Programação</span>
+                </div>
+                <p>Utilizam grafos para análise de fluxo de controle e otimização de código.</p>
+              </div>
+            </div>
+
+            <div class="slide-dots-deco">
+              <span class="sdot"></span><span class="sdot"></span><span class="sdot"></span>
+              <span class="sdot"></span><span class="sdot"></span><span class="sdot"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── SLIDE: Resumo e Principais Conceitos ──────────── -->
+      <div class="slide" id="slide-resumo">
+        <div class="panel slide-panel">
+          <div class="slide-content">
+            <div class="slide-bg-deco">
+              <div class="slide-circle sc1 sc-amber"></div>
+              <div class="slide-circle sc2"></div>
+            </div>
+            
+            <div class="slide-header-block">
+              <div>
+                <div class="slide-badge">Conclusão</div>
+                <h1 class="slide-title">Resumo e Principais Conceitos</h1>
+              </div>
+              <div class="slide-deco">
+                <div class="deco-lines"><span></span><span></span><span></span></div>
+                <div class="deco-triangle">◀</div>
+              </div>
+            </div>
+
+            <div class="slide-objective">
+              <strong>Síntese:</strong> Principais conceitos e aplicações da teoria dos grafos na computação moderna.
+            </div>
+
+            <div class="algo-grid">
+              <div class="algo-card">
+                <div class="algo-card-header">
+                  <strong>Estruturas Versáteis</strong>
+                  <span class="algo-tag algo-tag-blue">Modelagem</span>
+                </div>
+                <p>Grafos são estruturas versáteis para modelar relações entre entidades, aplicáveis em diversas áreas como redes sociais, logística e biologia computacional.</p>
+              </div>
+
+              <div class="algo-card">
+                <div class="algo-card-header">
+                  <strong>Representações</strong>
+                  <span class="algo-tag algo-tag-blue">Eficiência</span>
+                </div>
+                <p>Compreender os diferentes tipos de grafos e suas representações (lista e matriz de adjacência) facilita a escolha da estrutura mais eficiente para cada problema.</p>
+              </div>
+
+              <div class="algo-card algo-card-highlight">
+                <div class="algo-card-header">
+                  <strong>Algoritmos Fundamentais</strong>
+                  <span class="algo-tag algo-tag-amber">Otimização</span>
+                </div>
+                <p>Algoritmos em grafos como BFS, DFS, Dijkstra e Kruskal resolvem problemas complexos de busca, caminhos mínimos e otimização em várias áreas da computação.</p>
+              </div>
+
+              <div class="algo-card">
+                <div class="algo-card-header">
+                  <strong>Aplicações Práticas</strong>
+                  <span class="algo-tag algo-tag-blue">Mundo Real</span>
+                </div>
+                <p>Desde sistemas de navegação GPS até análise de redes sociais, os grafos são essenciais para resolver problemas do mundo real de forma eficiente.</p>
+              </div>
+            </div>
+
+            <div class="slide-dots-deco">
+              <span class="sdot"></span><span class="sdot"></span><span class="sdot"></span>
+              <span class="sdot"></span><span class="sdot"></span><span class="sdot"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div><!-- fim slides-wrapper -->
 
     <!-- ── NAVEGAÇÃO DOS SLIDES ─────────────────────────────── -->
     <nav class="slide-nav">
       <button class="slide-nav-btn active" data-slide="slide-grafo">
         <span class="slide-nav-dot"></span>
-        <span>Visualização do Grafo</span>
+        <span>Grafo</span>
       </button>
-      <button class="slide-nav-btn" data-slide="slide-cidades">
+      <button class="slide-nav-btn" data-slide="slide-caminho-minimo">
         <span class="slide-nav-dot"></span>
-        <span>Lista de Cidades</span>
+        <span>Caminho Mínimo</span>
       </button>
-      <button class="slide-nav-btn" data-slide="slide-matriz">
+      <button class="slide-nav-btn" data-slide="slide-dijkstra">
         <span class="slide-nav-dot"></span>
-        <span>Matriz de Distâncias</span>
-      </button>
-      <button class="slide-nav-btn" data-slide="slide-graphviz">
-        <span class="slide-nav-dot"></span>
-        <span>Graphviz Online</span>
+        <span>Dijkstra</span>
       </button>
       <button class="slide-nav-btn" data-slide="slide-destino">
         <span class="slide-nav-dot"></span>
-        <span>Escolha do Destino</span>
+        <span>Destino</span>
+      </button>
+      <button class="slide-nav-btn" data-slide="slide-cidades">
+        <span class="slide-nav-dot"></span>
+        <span>Cidades</span>
+      </button>
+      <button class="slide-nav-btn" data-slide="slide-matriz">
+        <span class="slide-nav-dot"></span>
+        <span>Matriz</span>
+      </button>
+      <button class="slide-nav-btn" data-slide="slide-algoritmos">
+        <span class="slide-nav-dot"></span>
+        <span>Algoritmos</span>
+      </button>
+      <button class="slide-nav-btn" data-slide="slide-aplicacoes">
+        <span class="slide-nav-dot"></span>
+        <span>Aplicações</span>
+      </button>
+      <button class="slide-nav-btn" data-slide="slide-resumo">
+        <span class="slide-nav-dot"></span>
+        <span>Resumo</span>
+      </button>
+      <button class="slide-nav-btn" data-slide="slide-graphviz">
+        <span class="slide-nav-dot"></span>
+        <span>Graphviz</span>
       </button>
     </nav>
 

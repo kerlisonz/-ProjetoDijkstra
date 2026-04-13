@@ -422,6 +422,7 @@ function setupNav() {
   const btnGraphviz = document.getElementById("btn-graphviz-open");
   if (btnGraphviz) btnGraphviz.href = graphvizURL;
 
+  // Navegação dos botões inferiores
   document.querySelectorAll(".slide-nav-btn").forEach(btn => {
     btn.addEventListener("click", () => {
       const target = btn.dataset.slide;
